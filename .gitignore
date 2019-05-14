@@ -1,0 +1,4 @@
+worker/clients/*
+worker/*.dat
+worker/.log
+worker/server

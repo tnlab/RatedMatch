@@ -45,24 +45,12 @@ while : ; do
         exit 1
     fi
 
-    # クライアント一覧から5個のクライアントをランダムに選出するループ
-    # $RANDOM はシード値が設定できない上、0-32767 までしか生成できない
-    # awk か jot 使う？
+    # クライアント一覧から5個のクライアントをランダムに選出する
     # TODO: このクライアントを固定にするリスト.txt
-    # 本当は重複なし乱数を5個生成できたら嬉しい
-    entriedClients=()
-    for i in {0..4}; do
-        num=$(($RANDOM%${#enabledClients[@]}))
-        entriedClients+=(${enabledClients[$num]})
-
-        # エントリーしたクライアントを除外
-        if [ ${#enabledClients[@]} = 1 ]; then
-            break
-        else
-            unset enabledClients[$num]
-            enabledClients=(${enabledClients[@]})
-        fi
-    done
+    defaultIFS=IFS
+    IFS=$'\n'
+    entriedClients=(`echo "${enabledClients[*]}" | shuf -n 5`)
+    IFS=$defaultIFS
 
     # サーバ起動
     echo Starting server...
@@ -72,10 +60,10 @@ while : ; do
     # クライアント起動
     for c in ${entriedClients[@]}; do
         sleep 1
-        echo "Starting `basename $c`..."
         clientName=`basename $c`
+        echo "Starting $clientName..."
         # PWD=`pwd`
-        cd $c
+        cd "$c"
         `./client -n $clientName &>> .log &`
         cd ../..
     done

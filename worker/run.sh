@@ -39,8 +39,8 @@ while : ; do
         elif [[ `basename $c` =~ ^\..+ ]]; then
             # ディレクトリ名が "." から始まるため無視する
             echo "$c was ignored"
-        elif [ ! -e "$c/client" ]; then
-            # ディレクトリ直下に client が存在しないため無視する（標準エラー出力に出す）
+        elif [ ! -f "$c/client" ]; then
+            # ディレクトリ直下に client というファイルが存在しないため無視する（標準エラー出力に出す）
             echo "! $c was ignored because ${c} does not have \"client\"" >&2
         else
             enabledClients+=($c)

@@ -1,4 +1,6 @@
-#!/usr/local/bash -eu
+#!/usr/bin/env bash
+# envのパスが合わない場合は適宜マシンごとに変更を加える
+set -eu
 
 # $1: セット数（未指定または負の値を指定した場合は無限ループ）
 defaultSetNum=-1

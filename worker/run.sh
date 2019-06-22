@@ -1,4 +1,4 @@
-#!/bin/bash -eu
+#!/usr/local/bash -eu
 
 # $1: セット数（未指定または負の値を指定した場合は無限ループ）
 defaultSetNum=-1

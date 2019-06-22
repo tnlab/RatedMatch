@@ -53,12 +53,44 @@ while : ; do
         exit 1
     fi
 
-    # クライアント一覧から5個のクライアントをランダムに選出する
-    # TODO: このクライアントを固定にするリスト.txt
-    defaultIFS=IFS
-    IFS=$'\n'
-    entriedClients=(`echo "${enabledClients[*]}" | shuf -n 5`)
-    IFS=$defaultIFS
+    entriedClients=()
+
+    if [ -z "$fixedClient" ]; then
+        # クライアント一覧から5個のクライアントをランダムに選出する
+        defaultIFS=IFS
+        IFS=$'\n'
+        entriedClients=(`echo "${enabledClients[*]}" | shuf -n 5`)
+        IFS=$defaultIFS
+    else
+        # fixedClient が指定されているときのみ
+        
+        # enabledClients から fixedClient を検索し、
+        # 存在したら entriedClients に追加して enabledClients から削除する
+        lastIndex=$((${#enabledClients[@]} - 1))
+        for i in `seq 0 ${lastIndex}`; do
+            if [ `basename ${enabledClients[$i]}` = ${fixedClient} ]; then
+                entriedClients+=(${enabledClients[$i]})
+
+                # エントリーしたクライアントを除外
+                unset enabledClients[$i]
+                enabledClients=(${enabledClients[@]})
+
+                break
+            fi
+        done
+
+        # enabledClients に fixedClient が存在しなかった場合終了
+        if [ ${#entriedClients[@]} -eq 0 ]; then
+            echo "!!! Client $fixedClient is not available." >&2
+            exit 1
+        fi
+
+        # クライアント一覧から固定されたクライアント以外の4個のクライアントをランダムに選出する
+        defaultIFS=IFS
+        IFS=$'\n'
+        entriedClients+=(`echo "${enabledClients[*]}" | shuf -n 4`)
+        IFS=$defaultIFS
+    fi
 
     # サーバ起動
     echo Starting server...

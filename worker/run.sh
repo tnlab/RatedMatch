@@ -126,9 +126,15 @@ while : ; do
 
     # マスタにログファイルを送信
     echo Sending log files to Master...
-    # newLog=
-    # logDestination="${masterLogDir}/`basename $newLog`"
-    # cp $newLog 
+    
+    copySource=".log"
+    # TODO: 実際のログファイルを参照する
+    echo copySource is $copySource
+
+    copyDestination="${masterLogDir}`basename $copySource`"
+    echo copyDestination is $copyDestination
+
+    cp $copySource $copyDestination
 
     echo End of set $(($setCount + 1))
     let setCount++ || :

@@ -1,1 +1,1 @@
-/home/tnlab/work/rated_match_log_test/
+/home/tnlab/work/rated_match_log_test

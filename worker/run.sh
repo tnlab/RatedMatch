@@ -41,7 +41,7 @@ while : ; do
             echo "$c was ignored"
         elif [ ! -e "$c/client" ]; then
             # ディレクトリ直下に client が存在しないため無視する（標準エラー出力に出す）
-            echo "$c was ignored because ${c} does not have \"client\"" >&2
+            echo "! $c was ignored because ${c} does not have \"client\"" >&2
         else
             enabledClients+=($c)
         fi
@@ -49,7 +49,7 @@ while : ; do
 
     if [ ${#enabledClients[@]} -lt 5 ]; then
         # 有効なクライアントが5個未満であるため終了
-        echo "Clients is too few" >&2
+        echo "!!! Clients is too few" >&2
         exit 1
     fi
 

@@ -3,12 +3,20 @@
 set -eu
 
 # セット数（未指定または負の値を指定した場合は無限ループ）
-setNum=`head -n 1 ./config/setnum.txt`
+readonly setNum=`head -n 1 ./config/setnum.txt | tr -d '\r' | tr -d '\n'`
 echo setNum is $setNum
 
 # 1セットあたりの試合数
-gameNum=`head -n 1 ./config/gamenum.txt`
+readonly gameNum=`head -n 1 ./config/gamenum.txt | tr -d '\r' | tr -d '\n'`
 echo gameNum is $gameNum
+
+# 必ず選出されるクライアント
+readonly fixedClient=`head -n 1 ./config/fixedclient.txt | tr -d '\r' | tr -d '\n'`
+if [ -z "$fixedClient" ]; then
+    echo No client is fixed.
+else
+    echo fixedClient is $fixedClient
+fi
 
 # セットを回すためのループ
 setCount=0

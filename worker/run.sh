@@ -2,14 +2,12 @@
 # envのパスが合わない場合は適宜マシンごとに変更を加える
 set -eu
 
-# $1: セット数（未指定または負の値を指定した場合は無限ループ）
-defaultSetNum=-1
-setNum=${1:-defaultSetNum}
+# セット数（未指定または負の値を指定した場合は無限ループ）
+setNum=`head -n 1 ./config/setnum.txt`
 echo setNum is $setNum
 
-# $2: 1セットあたりの試合数
-defaultGameNum=10000
-gameNum=${2:-defaultGameNum}
+# 1セットあたりの試合数
+gameNum=`head -n 1 ./config/gamenum.txt`
 echo gameNum is $gameNum
 
 # セットを回すためのループ

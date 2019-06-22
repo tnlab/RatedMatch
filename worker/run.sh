@@ -3,19 +3,28 @@
 set -eu
 
 # セット数（未指定または負の値を指定した場合は無限ループ）
-readonly setNum=`head -n 1 ./config/setnum.txt | tr -d '\r' | tr -d '\n'`
+readonly setNum=`head -n 1 ./config/set_num.txt | tr -d '\r' | tr -d '\n'`
 echo setNum is $setNum
 
 # 1セットあたりの試合数
-readonly gameNum=`head -n 1 ./config/gamenum.txt | tr -d '\r' | tr -d '\n'`
+readonly gameNum=`head -n 1 ./config/game_num.txt | tr -d '\r' | tr -d '\n'`
 echo gameNum is $gameNum
 
 # 必ず選出されるクライアント
-readonly fixedClient=`head -n 1 ./config/fixedclient.txt | tr -d '\r' | tr -d '\n'`
+readonly fixedClient=`head -n 1 ./config/fixed_client.txt | tr -d '\r' | tr -d '\n'`
 if [ -z "$fixedClient" ]; then
     echo No client is fixed.
 else
     echo fixedClient is $fixedClient
+fi
+
+# マスタへのログファイルの送信先
+readonly masterLogDir=`head -n 1 ./config/master_log_dir.txt | tr -d '\r' | tr -d '\n'`
+if [ -d "$masterLogDir" ]; then
+    echo masterLogDir is $masterLogDir
+else
+    echo "!!! Designated masterLogDir $masterLogDir is not available." >&2
+    exit 1
 fi
 
 # セットを回すためのループ
@@ -117,6 +126,9 @@ while : ; do
 
     # マスタにログファイルを送信
     echo Sending log files to Master...
+    # newLog=
+    # logDestination="${masterLogDir}/`basename $newLog`"
+    # cp $newLog 
 
     echo End of set $(($setCount + 1))
     let setCount++ || :

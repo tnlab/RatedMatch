@@ -34,7 +34,7 @@ while : ; do
         break
     fi
 
-    echo Starting set $(($setCount + 1))...
+    echo Starting set $setCount...
 
     # クライアント一覧を取得 -> allClients
     allClients="./clients/*"
@@ -136,7 +136,7 @@ while : ; do
 
     cp $copySource $copyDestination
 
-    echo End of set $(($setCount + 1))
+    echo End of set $setCount
     let setCount++ || :
 done
 

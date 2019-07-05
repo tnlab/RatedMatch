@@ -1,0 +1,6 @@
+/home/tnlab/work/rated_match/
+# サーバが出力した結果ファイルの集積先
+# 1セットごとに結果ファイルをまとめて保存先にmvする
+# Master が参照するディレクトリと同一とするかどうかは任意
+# パスの末尾に / が必要
+# デフォルト: /home/tnlab/work/rated_match/

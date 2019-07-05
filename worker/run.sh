@@ -18,12 +18,12 @@ else
     echo fixedClient is $fixedClient
 fi
 
-# マスタへのログファイルの送信先
-readonly masterLogDir=`head -n 1 ./config/master_log_dir.txt | tr -d '\r' | tr -d '\n'`
-if [ -d "$masterLogDir" ]; then
-    echo masterLogDir is $masterLogDir
+# サーバが出力した結果ファイルの集積先
+readonly logSavingDir=`head -n 1 ./config/log_saving_dir.txt | tr -d '\r' | tr -d '\n'`
+if [ -d "$logSavingDir" ]; then
+    echo logSavingDir is $logSavingDir
 else
-    echo "!!! Designated masterLogDir $masterLogDir is not available." >&2
+    echo "!!! Designated logSavingDir $logSavingDir is not available." >&2
     exit 1
 fi
 
@@ -121,17 +121,17 @@ while : ; do
     echo Waiting for finishing of $gameNum games...
     wait
 
-    # サーバの出力から、マスタへ送信するログファイルを生成
+    # TODO: サーバの出力から、Master で解釈するためのログファイルに整形
     echo Starting to generate log files...
 
-    # マスタにログファイルを送信
+    # 結果ファイルの集積先に移動
     echo Sending log files to Master...
     
     copySource=".log"
     # TODO: 実際のログファイルを参照する
     echo copySource is $copySource
 
-    copyDestination="${masterLogDir}`basename $copySource`"
+    copyDestination="${logSavingDir}`basename $copySource`"
     echo copyDestination is $copyDestination
 
     cp $copySource $copyDestination

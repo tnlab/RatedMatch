@@ -1,4 +1,0 @@
-/home/tnlab/work/rated_match/
-# サーバが出力した結果ファイルを保存する先
-# 1セットごとに結果ファイルをまとめて保存先にmvする
-# デフォルト: /home/tnlab/work/rated_match/

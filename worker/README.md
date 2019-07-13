@@ -1,4 +1,4 @@
-# RatedMatch
+# RatedMatch Worker
 
 UECda順位戦（仮称）で実行結果のログを生成し続ける Worker のシェルスクリプト類。
 bash で実行されることを想定している。
